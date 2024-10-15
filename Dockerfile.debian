@@ -319,7 +319,7 @@ RUN \
         && mkdir -p /opt \
         && cd /opt \
         && rm -rf /opt/frontend \
-        && git clone https://github.com/Steam-Headless/frontend.git --branch master /opt/frontend \
+        && git clone https://github.com/eball/steamheadless-frontend.git --branch master /opt/frontend \
         && cd /opt/frontend \
         && git checkout ${FRONTEND_VERSION} 2> /dev/null \
         && git submodule init \
@@ -498,6 +498,12 @@ RUN \
     && \
     echo
 
+# Download ge-proton
+RUN \
+    wget -O /usr/local/src/GE-Proton9-15.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton9-15/GE-Proton9-15.tar.gz
+
+# Download steam lib
+
 # Various other tools
 ARG DUMB_INIT_VERSION=1.2.5
 ARG DUMB_UDEV_VERSION=64d1427
@@ -550,7 +556,9 @@ ENV \
 # Configure required ports
 ENV \
     PORT_NOVNC_WEB="8083" \
-    NEKO_NAT1TO1=""
+    NEKO_NAT1TO1="" \
+    PORT_AUDIO_WEBSOCKET="443" \
+    DOMAIN_AUDIO_WEBSOCKET="localhost"
 
 # Expose the required ports
 EXPOSE 8083

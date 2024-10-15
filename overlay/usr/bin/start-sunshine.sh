@@ -10,6 +10,7 @@
 ###
 set -e
 source /usr/bin/common-functions.sh
+unset LD_PRELOAD   # FIXME:
 
 # CATCH TERM SIGNAL:
 _term() {

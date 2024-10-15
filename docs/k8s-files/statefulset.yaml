@@ -64,7 +64,11 @@ spec:
         - name: WEB_UI_MODE
           value: 'none'
         - name: ENABLE_VNC_AUDIO
-          value: 'false'
+          value: 'true'
+        - name: PORT_AUDIO_WEBSOCKET
+          value: "8088"
+        - name: DOMAIN_AUDIO_WEBSOCKET
+          value: "localhost"
         - name: PORT_NOVNC_WEB
           value: '8083'
         - name: NEKO_NAT1TO1
