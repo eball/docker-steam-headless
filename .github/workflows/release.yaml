@@ -32,7 +32,7 @@ jobs:
               uses: docker/build-push-action@v3
               with:
                   push: true
-                  tags: bytetrade/steamheadless:${{ github.event.inputs.tags }}
+                  tags: bytetrade/steam-headless:${{ github.event.inputs.tags }}
                   file: Dockerfile.debian
                 #   platforms: linux/amd64,linux/arm64
 
