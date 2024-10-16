@@ -43,8 +43,10 @@ for p in ${pkg[@]}; do
 done
 
 echo "Install GE-Proton ... "
-mkdir -p ${USER_HOME}/.steam/debian-installation/compatibilitytools.d
-cd ${USER_HOME}/.steam/debian-installation/compatibilitytools.d
-tar zxvf /usr/local/src/GE-Proton9-15.tar.gz
+if [[ ! -f ${USER_HOME}/.steam/debian-installation/compatibilitytools.d/GE-Proton9-15 ]]; then
+    mkdir -p ${USER_HOME}/.steam/debian-installation/compatibilitytools.d
+    cd ${USER_HOME}/.steam/debian-installation/compatibilitytools.d
+    tar zxvf /usr/local/src/GE-Proton9-15.tar.gz
+if
 
 echo "DONE"
