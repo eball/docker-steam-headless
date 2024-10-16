@@ -5,6 +5,13 @@ echo "**** Installing/upgrading Steam package ****"
 mkdir -p ${USER_HOME}/.steam/debian-installation/package
 
 pkg=(
+tenfoot_images_all.zip.vz.193cb8c4eb4446698ea2c0a9e8c4e6b6a623dac7_5572671
+resources_all.zip.vz.3d492fce87e5ccddbb855f26680b0c6798901010_2867227
+strings_all.zip.vz.2bee49ebaa1cf153bea903b50ecdaaeb6770168f_2006028
+steamui_websrc_movies_all.zip.4d2183b0476852dfb695b8d70192a0ccece8c7d0
+miles_ubuntu12.zip.vz.5093ef941e6e5195a60ab3259077694dec994016_295496
+sdl3_ubuntu12.zip.vz.efad8d8e33b4eefbefb0f04baad255ea3e064aae_6347963
+steam_ubuntu12.zip.vz.9a27820e0e317c8c302f9ceef6f43bc5e0f00108_2618473
 steamui_websrc_all.zip.vz.deeae77fea80a3110c15d0e9a63c2a95ab6ab647_24679493
 resources_misc_all.zip.vz.e86a975545f3ab21a77373870cb311ef93934b8c_2224876
 public_all.zip.vz.b0ad1267ec973fc34840c92ebbf4b35b0c40cc17_23591292
@@ -34,5 +41,10 @@ for p in ${pkg[@]}; do
         done
     fi
 done
+
+echo "Install GE-Proton ... "
+mkdir -p ${USER_HOME}/.steam/debian-installation/compatibilitytools.d
+cd ${USER_HOME}/.steam/debian-installation/compatibilitytools.d
+tar zxvf /usr/local/src/GE-Proton9-15.tar.gz
 
 echo "DONE"
