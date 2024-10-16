@@ -19,9 +19,19 @@ runtime_sniper_ubuntu12.zip.328e060d569aa12d70746dab1f74cd54196edf9c
 )
 
 for p in ${pkg[@]}; do
-    if [[ -f ${USER_HOME}/.steam/debian-installation/package/$p ]]; then
+    if [[ ! -f ${USER_HOME}/.steam/debian-installation/package/$p ]]; then
         echo "Downloading [${p}] ... "
-        wget -O ${USER_HOME}/.steam/debian-installation/package/$p http://media.steampowered.com/client/$p
+        checksum=$(echo $p|awk -F'.' '{print $NF}'|awk -F'_' '{print $1}')
+        retry=10
+        while [[ retry -gt 0 ]]; do
+            wget -O ${USER_HOME}/.steam/debian-installation/package/$p http://media.steampowered.com/client/$p
+            sum=$(sha1sum ${USER_HOME}/.steam/debian-installation/package/$p|awk '{print $1}')
+            if [[ x"$sum" == x"$checksum" ]]; then
+                break
+            fi
+
+            ((retry--))
+        done
     fi
 done
 
