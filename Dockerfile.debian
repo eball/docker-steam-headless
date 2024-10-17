@@ -498,12 +498,6 @@ RUN \
     && \
     echo
 
-# Download ge-proton
-RUN \
-    wget -O /usr/local/src/GE-Proton9-15.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton9-15/GE-Proton9-15.tar.gz
-
-# Download steam lib
-
 # Various other tools
 ARG DUMB_INIT_VERSION=1.2.5
 ARG DUMB_UDEV_VERSION=64d1427
@@ -523,6 +517,17 @@ RUN \
             git+https://github.com/Steam-Headless/dumb-udev.git@${DUMB_UDEV_VERSION} \
     && \
     echo
+
+# Download ge-proton
+RUN \
+    wget -O /usr/local/src/GE-Proton9-15.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton9-15/GE-Proton9-15.tar.gz
+
+# Download gpu driver
+
+RUN \
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-545.23.08.run https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-545.23.08.run
+
+
 
 # Add FS overlay
 COPY overlay /
