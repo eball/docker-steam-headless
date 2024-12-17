@@ -21,7 +21,7 @@ trap _term SIGTERM SIGINT
 if command -v udevd &>/dev/null; then
     unshare --net udevd --daemon &>/dev/null
 else
-    /lib/systemd/systemd-udevd --daemon 
+    /lib/systemd/systemd-udevd --daemon &>/dev/null
 fi
 # Monitor kernel uevents
 udevadm monitor &
