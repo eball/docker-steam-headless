@@ -525,7 +525,7 @@ RUN \
 # Download gpu driver
 
 RUN \
-    wget -O /usr/local/src/NVIDIA-Linux-x86_64-555.42.06.run https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-555.42.06.run
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-550.127.05.run http://download.nvidia.com/XFree86/Linux-x86_64/550.127.05/NVIDIA-Linux-x86_64-550.127.05.run
 
 
 
