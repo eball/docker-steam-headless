@@ -15,7 +15,7 @@ fi
 if [ "X${gpu_select:-}" != "X" ]; then
     export nvidia_pci_address="$(nvidia-smi --format=csv --query-gpu=pci.bus_id --id="${gpu_select:?}" 2> /dev/null | sed -n 2p | cut -d ':' -f2,3)"
     export nvidia_gpu_name=$(nvidia-smi --format=csv --query-gpu=name --id="${gpu_select:?}" 2> /dev/null | sed -n 2p)
-    export nvidia_host_driver_version="550.135" # "$(nvidia-smi 2> /dev/null | grep NVIDIA-SMI | cut -d ' ' -f3)"
+    export nvidia_host_driver_version="$(nvidia-smi 2> /dev/null | grep NVIDIA-SMI | cut -d ' ' -f3)"
 fi
 
 # Intel params
@@ -44,7 +44,7 @@ function download_driver {
         else
 	
 	        print_step_header "Downloading driver v${nvidia_host_driver_version:?}"
-	        driver_url="http://download.nvidia.com/XFree86/Linux-x86_64/${nvidia_host_driver_version:?}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version:?}.run"
+	        driver_url="https://us.download.nvidia.com/tesla/${nvidia_host_driver_version:?}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version:?}.run"
 	        if wget --spider --quiet "${driver_url:?}"; then
 	            wget -q --show-progress --progress=bar:force:noscroll \
 	                -O /tmp/NVIDIA.run \
