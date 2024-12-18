@@ -15,7 +15,7 @@ fi
 if [ "X${gpu_select:-}" != "X" ]; then
     export nvidia_pci_address="$(nvidia-smi --format=csv --query-gpu=pci.bus_id --id="${gpu_select:?}" 2> /dev/null | sed -n 2p | cut -d ':' -f2,3)"
     export nvidia_gpu_name=$(nvidia-smi --format=csv --query-gpu=name --id="${gpu_select:?}" 2> /dev/null | sed -n 2p)
-    export nvidia_host_driver_version="555.42.06.run" # "$(nvidia-smi 2> /dev/null | grep NVIDIA-SMI | cut -d ' ' -f3)"
+    export nvidia_host_driver_version="555.42.06" # "$(nvidia-smi 2> /dev/null | grep NVIDIA-SMI | cut -d ' ' -f3)"
 fi
 
 # Intel params
