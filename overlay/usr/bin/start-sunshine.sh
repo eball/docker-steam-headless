@@ -67,6 +67,11 @@ export_desktop_dbus_session
 # Wait for the desktop to start
 wait_for_desktop
 
+if [ "${ENABLE_SYSTEMD_UDEVD}" == "true" ]; then
+    echo "wait for systemd-udevd"
+    wait_for_udevd
+fi
+
 # Start the sunshine server
 /usr/bin/dumb-init /usr/bin/sunshine "${USER_HOME:?}/.config/sunshine/sunshine.conf" &
 sunshine_pid=$!

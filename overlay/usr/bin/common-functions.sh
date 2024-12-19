@@ -102,3 +102,16 @@ wait_for_desktop_dbus_session() {
         fi
     done
 }
+
+wait_for_udevd() {
+    MAX=10
+    CT=0
+    while [ $(ps -ef|grep systemd-udevd |grep -v grep|wc -l) -eq 0 ]; do
+        sleep 1
+        CT=$(( CT + 1 ))
+        if [ "$CT" -ge "$MAX" ]; then
+            echo "FATAL: $0: Gave up waiting for systemd-udevd server to start"
+            exit 11
+        fi
+    done
+}

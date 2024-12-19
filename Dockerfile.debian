@@ -557,8 +557,9 @@ ENV \
     ENABLE_SUNSHINE="true" \
     ENABLE_EVDEV_INPUTS="true" \
     ENABLE_WOL_POWER_MANAGER="false" \
-    ENABLE_SID="false"
-
+    ENABLE_SID="false" \
+    ENABLE_SYSTEMD_UDEVD="true"
+    
 # Configure required ports
 ENV \
     PORT_NOVNC_WEB="8083" \

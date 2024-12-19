@@ -16,11 +16,15 @@ _term() {
 }
 trap _term SIGTERM SIGINT
 
-
-# EXECUTE PROCESS:
-# Start dumb-udev
-dumb-udev &
-dumb_udev_pid=$!
+if [ "${ENABLE_SYSTEMD_UDEVD}" != "true" ]; then
+    # EXECUTE PROCESS:
+    # Start dumb-udev
+    dumb-udev &
+    dumb_udev_pid=$!
+else
+    /lib/systemd/systemd-udevd &
+    dumb_udev_pid=$!
+fi
 
 # WAIT FOR CHILD PROCESS:
 wait "$dumb_udev_pid"
