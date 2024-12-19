@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-echo "**** Installing/upgrading ProtonUp-Qt via flatpak ****"
+echo "**** Installing/upgrading ProtonUp-Qt from local AppImage ****"
 
-# Install ProtonUp-Qt
-flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 
-flatpak --user install --assumeyes --or-update net.davidotek.pupgui2
+PROTONUP_VERSION="2.8.2"
+APPIMAGE_PATH="/usr/local/src/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage"
 
-# Configure ProtonUp-Qt
-echo "Configure ProtonUp-Qt..."
-sed -i 's/^Categories=.*$/Categories=Utility;/' \
-    ${USER_HOME}/.local/share/flatpak/exports/share/applications/net.davidotek.pupgui2.desktop
+# Make AppImage executable
+chmod +x "${APPIMAGE_PATH}"
+
+# Create symbolic link in /usr/local/bin
+ln -sf "${APPIMAGE_PATH}" /usr/local/bin/protonup-qt
 
 echo "DONE"

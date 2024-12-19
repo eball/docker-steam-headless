@@ -527,6 +527,9 @@ RUN \
 RUN \
     wget -O /usr/local/src/NVIDIA-Linux-x86_64-550.127.08.run https://us.download.nvidia.com/tesla/550.127.08/NVIDIA-Linux-x86_64-550.127.08.run
 
+ARG PROTONUP_VERSION="2.8.2"
+RUN \
+    wget -O /usr/local/src/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage "https://github.com/DavidoTek/ProtonUp-Qt/releases/download/v${PROTONUP_VERSION}/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage"
 
 
 
@@ -559,7 +562,7 @@ ENV \
     ENABLE_WOL_POWER_MANAGER="false" \
     ENABLE_SID="false" \
     ENABLE_SYSTEMD_UDEVD="true"
-    
+
 # Configure required ports
 ENV \
     PORT_NOVNC_WEB="8083" \
