@@ -568,7 +568,14 @@ ENV \
     PORT_NOVNC_WEB="8083" \
     NEKO_NAT1TO1="" \
     PORT_AUDIO_WEBSOCKET="443" \
-    DOMAIN_AUDIO_WEBSOCKET="localhost"
+    DOMAIN_AUDIO_WEBSOCKET="localhost" \
+    LANG="C.UTF-8" \
+    LANGUAGE="C.UTF-8" \
+    LC_ALL="C.UTF-8"
+
+RUN \
+   apt install -y fonts-noto-cjk && \
+   fc-cache -fv
 
 # Expose the required ports
 EXPOSE 8083
