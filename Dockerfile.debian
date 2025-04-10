@@ -525,7 +525,7 @@ RUN \
 # Download gpu driver
 
 RUN \
-    wget -O /usr/local/src/NVIDIA-Linux-x86_64-550.127.08.run https://us.download.nvidia.com/tesla/550.127.08/NVIDIA-Linux-x86_64-550.127.08.run
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-550.144.03.run https://download.nvidia.com/XFree86/Linux-x86_64/550.144.03/NVIDIA-Linux-x86_64-550.144.03.run
 
 ARG PROTONUP_VERSION="2.8.2"
 RUN \

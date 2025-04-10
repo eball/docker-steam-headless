@@ -44,7 +44,7 @@ function download_driver {
         else
 	
 	        print_step_header "Downloading driver v${nvidia_host_driver_version:?}"
-	        driver_url="https://us.download.nvidia.com/tesla/${nvidia_host_driver_version:?}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version:?}.run"
+            driver_url="https://download.nvidia.com/XFree86/Linux-x86_64/${nvidia_host_driver_version:?}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version:?}.run"
 	        if wget --spider --quiet "${driver_url:?}"; then
 	            wget -q --show-progress --progress=bar:force:noscroll \
 	                -O /tmp/NVIDIA.run \
