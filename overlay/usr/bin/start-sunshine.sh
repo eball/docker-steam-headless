@@ -38,7 +38,10 @@ trap _term SIGTERM SIGINT
 # Install default configurations
 mkdir -p "${USER_HOME:?}/.config/sunshine"
 # FIXME:
-cat /dev/null > ${USER_HOME:?}/.config/sunshine/so.preload && mount --bind ${USER_HOME:?}/.config/sunshine/so.preload /etc/ld.so.preload
+if [ -f /etc/ld.so.preload ]; then
+    cat /dev/null > ${USER_HOME:?}/.config/sunshine/so.preload && mount --bind ${USER_HOME:?}/.config/sunshine/so.preload /etc/ld.so.preload
+fi
+
 if [ ! -f "${USER_HOME:?}/.config/sunshine/sunshine.conf" ]; then
     cp -vf /templates/sunshine/sunshine.conf "${USER_HOME:?}/.config/sunshine/sunshine.conf"
 fi
