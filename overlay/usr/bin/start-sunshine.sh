@@ -45,6 +45,8 @@ fi
 if [ ! -f "${USER_HOME:?}/.config/sunshine/sunshine.conf" ]; then
     cp -vf /templates/sunshine/sunshine.conf "${USER_HOME:?}/.config/sunshine/sunshine.conf"
     echo "external_ip = ${NODE_IP}" >> "${USER_HOME:?}/.config/sunshine/sunshine.conf"
+else
+    sed -i "s/external_ip = .*/external_ip = ${NODE_IP}/" "${USER_HOME:?}/.config/sunshine/sunshine.conf"
 fi
 if [ ! -f "${USER_HOME:?}/.config/sunshine/apps.json" ]; then
     cp -vf /templates/sunshine/apps.json "${USER_HOME:?}/.config/sunshine/apps.json"
