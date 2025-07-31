@@ -249,13 +249,20 @@ function install_intel_gpu_driver {
 
 
 # NVIDIA GPU
-if [ "${nvidia_pci_address:-}X" != "X" ]; then
-    print_header "Found NVIDIA device '${nvidia_gpu_name:?}'"
-    install_nvidia_driver
-    patch_nvidia_driver
-elif [ "${NVIDIA_DRIVER_VERSION:-}X" != "X" ]; then
+latest=$(curl -SsfL https://download.nvidia.com/XFree86/Linux-x86_64/latest.txt)
+if [ "${latest:-}X" != "X" ]; then
+    NVIDIA_DRIVER_VERSION="$(awk '{print $1}' <<< "${latest:?}")"
+fi
+NVIDIA_DRIVER_VERSION="575.51.02"
+
+
+if [ "${NVIDIA_DRIVER_VERSION:-}X" != "X" ]; then
     export nvidia_host_driver_version="${NVIDIA_DRIVER_VERSION:?}"
     print_header "Forcing install of NVIDIA driver version '${nvidia_host_driver_version:?}' because the 'NVIDIA_DRIVER_VERSION' variable is set."
+    install_nvidia_driver
+    patch_nvidia_driver
+elif [ "${nvidia_pci_address:-}X" != "X" ]; then
+    print_header "Found NVIDIA device '${nvidia_gpu_name:?}'"
     install_nvidia_driver
     patch_nvidia_driver
 else
