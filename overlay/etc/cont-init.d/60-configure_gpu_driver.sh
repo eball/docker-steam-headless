@@ -40,29 +40,35 @@ function download_driver {
 
         # Try downloading from a list of NVIDIA driver hosting servers
         stripped_version="${nvidia_host_driver_version#v}" # Strip 'v' if present
-        declare -a sources=(
-            "https://download.nvidia.com/XFree86/Linux-x86_64/${nvidia_host_driver_version}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version}.run"
-            "https://us.download.nvidia.com/XFree86/Linux-x86_64/${nvidia_host_driver_version}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version}.run"
-            "https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-${stripped_version}.run"
-        )
+        if [[ -f /usr/local/src/NVIDIA-Linux-x86_64-${stripped_version:?}.run ]]; then
+            print_step_header "Copy driver v${nvidia_host_driver_version:?}"
+            cp /usr/local/src/NVIDIA-Linux-x86_64-${stripped_version:?}.run "${USER_HOME:?}/Downloads/NVIDIA_${nvidia_host_driver_version:?}.run"
+        else
 
-        for driver_url in "${sources[@]}"; do
-            if wget -q --show-progress --progress=bar:force:noscroll \
-                -O /tmp/NVIDIA.run \
-                "${driver_url:?}"; then
-                mv /tmp/NVIDIA.run "${USER_HOME:?}/Downloads/NVIDIA_${nvidia_host_driver_version:?}.run"
-                return 0
-                mv /tmp/NVIDIA.run "${USER_HOME:?}/Downloads/NVIDIA_${nvidia_host_driver_version:?}.run"
-                return 0
-            else
-                print_warning "Download failed from: ${driver_url}"
-            fi
-        done
+          declare -a sources=(
+              "https://download.nvidia.com/XFree86/Linux-x86_64/${nvidia_host_driver_version}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version}.run"
+              "https://us.download.nvidia.com/XFree86/Linux-x86_64/${nvidia_host_driver_version}/NVIDIA-Linux-x86_64-${nvidia_host_driver_version}.run"
+              "https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-${stripped_version}.run"
+          )
 
-        print_note "Visit https://download.nvidia.com/XFree86/Linux-x86_64/ in a browser and find the closest match to version '${nvidia_host_driver_version:?}', then set that version in the NVIDIA_DRIVER_VERSION environment variable."
-        print_error "Unable to download driver from any source. Exit!"
-        sleep 10
-        return 1
+          for driver_url in "${sources[@]}"; do
+              if wget -q --show-progress --progress=bar:force:noscroll \
+                  -O /tmp/NVIDIA.run \
+                  "${driver_url:?}"; then
+                  mv /tmp/NVIDIA.run "${USER_HOME:?}/Downloads/NVIDIA_${nvidia_host_driver_version:?}.run"
+                  return 0
+                  mv /tmp/NVIDIA.run "${USER_HOME:?}/Downloads/NVIDIA_${nvidia_host_driver_version:?}.run"
+                  return 0
+              else
+                  print_warning "Download failed from: ${driver_url}"
+              fi
+          done
+
+          print_note "Visit https://download.nvidia.com/XFree86/Linux-x86_64/ in a browser and find the closest match to version '${nvidia_host_driver_version:?}', then set that version in the NVIDIA_DRIVER_VERSION environment variable."
+          print_error "Unable to download driver from any source. Exit!"
+          sleep 10
+          return 1
+        fi
     fi
 }
 
@@ -225,23 +231,26 @@ function install_intel_gpu_driver {
     fi
 }
 
-# Intel Arc GPU or Intel CPU with possible iGPU
-if [ "${intel_gpu_model:-}X" != "X" ]; then
-    print_header "Found Intel device '${intel_gpu_model:?}'"
-    install_intel_gpu_driver
-elif [ "${intel_cpu_model:-}X" != "X" ]; then
-    print_header "Found Intel device '${intel_cpu_model:?}'"
-    install_intel_gpu_driver
-else
-    print_header "No Intel device found"
-fi
-# AMD GPU
-if [ "${amd_gpu_model:-}X" != "X" ]; then
-    print_header "Found AMD device '${amd_gpu_model:?}'"
-    install_amd_gpu_driver
-else
-    print_header "No AMD device found"
-fi
+# force nvidia
+# # Intel Arc GPU or Intel CPU with possible iGPU
+# if [ "${intel_gpu_model:-}X" != "X" ]; then
+#     print_header "Found Intel device '${intel_gpu_model:?}'"
+#     install_intel_gpu_driver
+# elif [ "${intel_cpu_model:-}X" != "X" ]; then
+#     print_header "Found Intel device '${intel_cpu_model:?}'"
+#     install_intel_gpu_driver
+# else
+#     print_header "No Intel device found"
+# fi
+# # AMD GPU
+# if [ "${amd_gpu_model:-}X" != "X" ]; then
+#     print_header "Found AMD device '${amd_gpu_model:?}'"
+#     install_amd_gpu_driver
+# else
+#     print_header "No AMD device found"
+# fi
+
+
 # NVIDIA GPU
 if [ "${NVIDIA_DRIVER_VERSION:-}X" != "X" ]; then
     export nvidia_host_driver_version="${NVIDIA_DRIVER_VERSION:?}"

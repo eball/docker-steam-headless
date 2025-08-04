@@ -326,7 +326,7 @@ RUN \
         && mkdir -p /opt \
         && cd /opt \
         && rm -rf /opt/frontend \
-        && git clone https://github.com/Steam-Headless/frontend.git --branch master /opt/frontend \
+        && git clone https://github.com/eball/steamheadless-frontend.git --branch master /opt/frontend \
         && cd /opt/frontend \
         && git checkout ${FRONTEND_VERSION} 2> /dev/null \
         && git submodule init \
@@ -482,7 +482,10 @@ RUN \
     echo
 
 # Install Sunshine
-COPY --from=lizardbyte/sunshine:v2025.122.141614-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
+# Install Sunshine
+COPY --from=beclab/sunshine:14f7a3f-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
+# COPY --from=lizardbyte/sunshine:v2025.122.141614-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
+
 RUN \
     echo "**** Update apt database ****" \
         && apt-get update \
@@ -530,6 +533,24 @@ RUN \
     && \
     echo
 
+# Download ge-proton
+RUN \
+    wget -O /usr/local/src/GE-Proton9-15.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton9-15/GE-Proton9-15.tar.gz
+
+# Download gpu driver
+
+RUN \
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-575.51.03.run https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-575.51.03.run
+    
+RUN \
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-570.86.10.run https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-570.86.10.run
+
+ARG PROTONUP_VERSION="2.8.2"
+RUN \
+    wget -O /usr/local/src/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage "https://github.com/DavidoTek/ProtonUp-Qt/releases/download/v${PROTONUP_VERSION}/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage"
+
+
+
 # Add FS overlay
 COPY overlay /
 
@@ -560,12 +581,23 @@ ENV \
     ENABLE_SUNSHINE="true" \
     ENABLE_EVDEV_INPUTS="true" \
     ENABLE_WOL_POWER_MANAGER="false" \
-    ENABLE_SID="false"
+    ENABLE_SID="false" \
+    ENABLE_SYSTEMD_UDEVD="true"
 
 # Configure required ports
 ENV \
     PORT_NOVNC_WEB="8083" \
-    NEKO_NAT1TO1=""
+    NEKO_NAT1TO1="" \
+    PORT_AUDIO_WEBSOCKET="443" \
+    DOMAIN_AUDIO_WEBSOCKET="localhost" \
+    LANG="C.UTF-8" \
+    LANGUAGE="C.UTF-8" \
+    LC_ALL="C.UTF-8"
+
+RUN \
+   apt update && \
+   apt install -y fonts-noto-cjk && \
+   fc-cache -fv
 
 # Expose the required ports
 EXPOSE 8083

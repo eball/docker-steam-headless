@@ -10,6 +10,7 @@
 ###
 set -e
 source /usr/bin/common-functions.sh
+unset LD_PRELOAD   # FIXME:
 
 # CATCH TERM SIGNAL:
 _term() {
@@ -36,8 +37,16 @@ trap _term SIGTERM SIGINT
 # CONFIGURE:
 # Install default configurations
 mkdir -p "${USER_HOME:?}/.config/sunshine"
+# FIXME:
+if [ -f /etc/ld.so.preload ]; then
+    cat /dev/null > ${USER_HOME:?}/.config/sunshine/so.preload && mount --bind ${USER_HOME:?}/.config/sunshine/so.preload /etc/ld.so.preload
+fi
+
 if [ ! -f "${USER_HOME:?}/.config/sunshine/sunshine.conf" ]; then
     cp -vf /templates/sunshine/sunshine.conf "${USER_HOME:?}/.config/sunshine/sunshine.conf"
+    echo "external_ip = ${NODE_IP}" >> "${USER_HOME:?}/.config/sunshine/sunshine.conf"
+else
+    sed -i "s/external_ip = .*/external_ip = ${NODE_IP}/" "${USER_HOME:?}/.config/sunshine/sunshine.conf"
 fi
 if [ ! -f "${USER_HOME:?}/.config/sunshine/apps.json" ]; then
     cp -vf /templates/sunshine/apps.json "${USER_HOME:?}/.config/sunshine/apps.json"
@@ -69,6 +78,11 @@ export_desktop_dbus_session
 
 # Wait for the desktop to start
 wait_for_desktop
+
+if [ "${ENABLE_SYSTEMD_UDEVD}" == "true" ]; then
+    echo "wait for systemd-udevd"
+    wait_for_udevd
+fi
 
 # Start the sunshine server
 /usr/bin/dumb-init /usr/bin/sunshine "${USER_HOME:?}/.config/sunshine/sunshine.conf" &

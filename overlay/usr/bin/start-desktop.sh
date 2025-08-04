@@ -34,10 +34,11 @@ export XDG_DATA_HOME="${USER_HOME:?}/.local/share"
 # Wait for the X server to start
 wait_for_x
 # Install/Upgrade user apps
+# source /usr/bin/install_firefox.sh;
 if [[ ! -f /tmp/.desktop-apps-updated ]]; then
     xterm -geometry 200x50+0+0 -ls -e /bin/bash -c "
-        source /usr/bin/install_firefox.sh;
         source /usr/bin/install_protonup.sh;
+        source /usr/bin/install_steam_pkg.sh;
         sleep 1;
     "
     touch /tmp/.desktop-apps-updated
