@@ -484,7 +484,7 @@ RUN \
 # Install Sunshine
 # Install Sunshine
 # COPY --from=beclab/sunshine:14f7a3f-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
-COPY --from=beclab/sunshine:a2811c4-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
+COPY --from=beclab/sunshine:1260543-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
 
 RUN \
     echo "**** Update apt database ****" \
