@@ -1,5 +1,4 @@
 FROM debian:trixie-slim
-LABEL maintainer="Josh.5 <jsunnex@gmail.com>"
 
 # Update package repos
 ARG DEBIAN_FRONTEND=noninteractive
@@ -67,7 +66,7 @@ RUN \
             jq \
             less \
             man-db \
-            mlocate \
+            plocate \
             nano \
             net-tools \
             p7zip-full \
