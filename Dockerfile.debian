@@ -183,6 +183,8 @@ RUN \
             xserver-xorg-legacy \
             xserver-xorg-video-all \
             xserver-xorg-video-dummy \
+            xvfb \
+            mesa-utils \
     && \
     echo "**** Section cleanup ****" \
         && apt-get clean autoclean -y \
@@ -484,7 +486,7 @@ RUN \
 # Install Sunshine
 # Install Sunshine
 # COPY --from=beclab/sunshine:14f7a3f-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
-COPY --from=beclab/sunshine:1260543-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
+COPY --from=beclab/sunshine:670a772-debian-trixie /sunshine.deb /usr/src/sunshine.deb
 
 RUN \
     echo "**** Update apt database ****" \
