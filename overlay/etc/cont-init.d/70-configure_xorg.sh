@@ -94,7 +94,7 @@ function configure_x_server {
         print_step_header "Configure container as primary the X server"
         # Enable supervisord script
         sed -i 's|^autostart.*=.*$|autostart=true|' /etc/supervisor.d/xorg.ini
-    elif [ "${MODE}" == "fb" ] | [ "${MODE}" == "framebuffer" ]; then
+    elif [ "${MODE}" == "fb" ] || [ "${MODE}" == "framebuffer" ]; then
         print_step_header "Configure container to use a virtual framebuffer as the X server"
         # Disable xorg supervisord script
         sed -i 's|^autostart.*=.*$|autostart=false|' /etc/supervisor.d/xorg.ini

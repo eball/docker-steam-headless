@@ -172,7 +172,6 @@ RUN \
             xclip \
             xcvt \
             xdotool \
-            xfishtank \
             xfonts-base \
             xinit \
             xorg \
@@ -256,9 +255,7 @@ RUN \
         && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/vim.desktop \
         && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/thunar-settings.desktop \
         && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/thunar.desktop \
-        && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/pavucontrol.desktop \
         && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/x11vnc.desktop \
-        && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/display-im6.q16.desktop \
         # These are named specifically for Debain
         && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/debian-xterm.desktop \
         && sed -i '/[Desktop Entry]/a\NoDisplay=true' /usr/share/applications/debian-uxterm.desktop \
@@ -399,7 +396,6 @@ RUN \
             gstreamer1.0-vaapi \
             gstreamer1.0-x \
             libgstreamer1.0-0 \
-            libncursesw5 \
             libopenal1 \
             libsdl-image1.2 \
             libsdl-ttf2.0-0 \
@@ -464,6 +460,7 @@ RUN \
 RUN \
     echo "**** Update apt database ****" \
         && dpkg --add-architecture i386 \
+        && echo "deb http://ftp.de.debian.org/debian sid main contrib" >> /etc/apt/sources.list.d/steam.list \
         && apt-get update \
     && \
     echo "**** Install Steam ****" \
@@ -541,11 +538,8 @@ RUN \
 # Download gpu driver
 
 RUN \
-    wget -O /usr/local/src/NVIDIA-Linux-x86_64-575.51.03.run https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-575.51.03.run
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-580.95.05.run https://us.download.nvidia.com/XFree86/Linux-x86_64/580.95.05/NVIDIA-Linux-x86_64-580.95.05.run
     
-RUN \
-    wget -O /usr/local/src/NVIDIA-Linux-x86_64-570.86.10.run https://github.com/flathub/org.freedesktop.Platform.GL.nvidia/releases/download/cuda/NVIDIA-Linux-x86_64-570.86.10.run
-
 ARG PROTONUP_VERSION="2.8.2"
 RUN \
     wget -O /usr/local/src/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage "https://github.com/DavidoTek/ProtonUp-Qt/releases/download/v${PROTONUP_VERSION}/ProtonUp-Qt-${PROTONUP_VERSION}-x86_64.AppImage"
