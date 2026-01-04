@@ -55,6 +55,17 @@ function configure_nvidia_x_server {
     sed -i '/Section\s\+"Monitor"/a\    '"${MODELINE}" /etc/X11/xorg.conf
     # Prevent interference between GPUs
     echo -e "Section \"ServerFlags\"\n    Option \"AutoAddGPU\" \"false\"\nEndSection" | tee -a /etc/X11/xorg.conf > /dev/null
+
+    if [[ "${DEVICE_NAME}" = "Olares One" ]]; then
+        print_step_header "Olares One detected. Installing Olares One specific xorg.conf"
+        cp -f /templates/xorg/xorg.olares1.conf /etc/X11/xorg.conf
+
+        # Set HDMI audio output
+        pactl load-module module-alsa-sink device=plughw:0,3 sink_name=nvhdmi
+        amixer -c 0 sset 'IEC958' on
+        pactl unload-module module-alsa-sink
+    fi
+
 }
 
 # Allow anybody for running x server
@@ -118,16 +129,6 @@ function configure_x_server {
         print_step_header "No monitors connected. Installing dummy xorg.conf"
         # Use a dummy display input
         cp -f /templates/xorg/xorg.dummy.conf /etc/X11/xorg.conf
-    else
-        if [[ "${DEVICE_NAME}" = "Olares One" ]]; then
-            print_step_header "Olares One detected. Installing Olares One specific xorg.conf"
-            cp -f /templates/xorg/xorg.olares1.conf /etc/X11/xorg.conf
-
-            # Set HDMI audio output
-            pactl load-module module-alsa-sink device=plughw:0,3 sink_name=nvhdmi
-            amixer -c 0 sset 'IEC958' on
-            pactl unload-module module-alsa-sink
-        fi
     fi
 }
 
