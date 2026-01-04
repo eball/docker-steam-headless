@@ -23,6 +23,12 @@ echo "PULSEAUDIO: Starting pulseaudio service"
 /usr/bin/pulseaudio --exit-idle-time=-1 &
 pulseaudio_pid=$!
 
+if [[ "${DEVICE_NAME}" = "Olares One" ]]; then
+    # Set HDMI audio output
+    pactl load-module module-alsa-sink device=plughw:0,3 sink_name=nvhdmi
+    amixer -c 0 sset 'IEC958' on
+    pactl unload-module module-alsa-sink
+fi
 
 # WAIT FOR CHILD PROCESS:
 wait "$pulseaudio_pid"
