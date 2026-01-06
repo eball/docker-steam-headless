@@ -44,7 +44,7 @@ if [[ "${DEVICE_NAME}" = "Olares One" ]]; then
     # Set HDMI audio output
     pactl load-module module-alsa-sink device=plughw:0,3 sink_name=nvhdmi || { kill -TERM "$pulseaudio_pid" 2>/dev/null && exit 12; }
     amixer -c 0 sset 'IEC958' on
-    pactl unload-module module-alsa-sink
+    # pactl unload-module module-alsa-sink
 fi
 
 # WAIT FOR CHILD PROCESS:
