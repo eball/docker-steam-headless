@@ -538,7 +538,7 @@ RUN \
 # Download gpu driver
 
 RUN \
-    wget -O /usr/local/src/NVIDIA-Linux-x86_64-580.95.05.run https://us.download.nvidia.com/XFree86/Linux-x86_64/580.95.05/NVIDIA-Linux-x86_64-580.95.05.run
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-590.44.01.run https://us.download.nvidia.com/XFree86/Linux-x86_64/590.44.01/NVIDIA-Linux-x86_64-590.44.01.run
     
 ARG PROTONUP_VERSION="2.8.2"
 RUN \
