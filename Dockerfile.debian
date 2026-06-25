@@ -482,7 +482,7 @@ RUN \
 # Install Sunshine
 # Install Sunshine
 # COPY --from=beclab/sunshine:14f7a3f-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
-COPY --from=beclab/sunshine:670a772-debian-trixie /sunshine.deb /usr/src/sunshine.deb
+COPY --from=beclab/sunshine:63c0f65-debian-trixie /sunshine.deb /usr/src/sunshine.deb
 
 RUN \
     echo "**** Update apt database ****" \
@@ -538,7 +538,7 @@ RUN \
 # Download gpu driver
 
 RUN \
-    wget -O /usr/local/src/NVIDIA-Linux-x86_64-590.44.01.run https://us.download.nvidia.com/XFree86/Linux-x86_64/590.44.01/NVIDIA-Linux-x86_64-590.44.01.run
+    wget -O /usr/local/src/NVIDIA-Linux-x86_64-595.84.run https://us.download.nvidia.com/XFree86/Linux-x86_64/595.84/NVIDIA-Linux-x86_64-595.84.run
     
 ARG PROTONUP_VERSION="2.8.2"
 RUN \
@@ -548,6 +548,9 @@ RUN \
 
 # Add FS overlay
 COPY overlay /
+
+# download steam package to speed up installation
+RUN export PREINSTALL_STEAM_PACKAGE=true && /usr/bin/install_steam_pkg.sh
 
 # Set display environment variables
 ENV \
