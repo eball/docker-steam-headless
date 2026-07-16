@@ -482,7 +482,7 @@ RUN \
 # Install Sunshine
 # Install Sunshine
 # COPY --from=beclab/sunshine:14f7a3f-debian-bookworm /sunshine.deb /usr/src/sunshine.deb
-COPY --from=beclab/sunshine:63c0f65-debian-trixie /sunshine.deb /usr/src/sunshine.deb
+COPY --from=beclab/sunshine:9ad85b7-debian-trixie /sunshine.deb /usr/src/sunshine.deb
 
 RUN \
     echo "**** Update apt database ****" \
