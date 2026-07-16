@@ -460,7 +460,7 @@ RUN \
 RUN \
     echo "**** Update apt database ****" \
         && dpkg --add-architecture i386 \
-        && echo "deb http://ftp.de.debian.org/debian sid main contrib" >> /etc/apt/sources.list.d/steam.list \
+        && echo "deb http://ftp.de.debian.org/debian sid main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/steam.list \
         && apt-get update \
     && \
     echo "**** Install Steam ****" \
