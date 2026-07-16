@@ -460,12 +460,15 @@ RUN \
 RUN \
     echo "**** Update apt database ****" \
         && dpkg --add-architecture i386 \
-        && echo "deb http://ftp.de.debian.org/debian sid main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/steam.list \
-        && apt-get update \
-    && \
+        && echo "deb http://ftp.debian.org/debian sid main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/steam.list \
+        && apt-get update 
+
+RUN \        
     echo "**** Install Steam ****" \
         && apt-get install -y --no-install-recommends \
             steam-libs-i386=1:1.0.0.83~ds-3 \
+            steam-libs:amd64=1:1.0.0.83~ds-3 \
+            steam-libs:i386=1:1.0.0.83~ds-3 \
             steam-installer=1:1.0.0.83~ds-3 \
             gamescope \
         && ln -sf /usr/games/steam /usr/bin/steam \
