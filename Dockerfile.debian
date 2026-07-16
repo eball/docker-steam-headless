@@ -466,6 +466,7 @@ RUN \
     echo "**** Install Steam ****" \
         && apt-get install -y --no-install-recommends \
             steam-installer \
+            steam-libs-i386 \
             gamescope \
         && ln -sf /usr/games/steam /usr/bin/steam \
     && \
